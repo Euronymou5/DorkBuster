@@ -67,3 +67,14 @@ pip3 install -r requirements.txt
 ```bash
 python3 main.py
 ```
+
+# Imagenes
+
+| Menu principal | Menu de configuracion |
+| -------------- | ----------------|
+|![Index](https://media.discordapp.net/attachments/995599976463859713/1144118265573036092/image.png?width=535&height=344)|![f](https://media.discordapp.net/attachments/995599976463859713/1144118469076467753/image.png?width=535&height=344)
+
+
+| Menu de argumentos | Busqueda de resultados |
+| -------------- | ----------------|
+|![Index](https://media.discordapp.net/attachments/995599976463859713/1144118545207267328/image.png?width=535&height=345)|![image](https://media.discordapp.net/attachments/995599976463859713/1144118903732178944/image.png?width=535&height=344)
