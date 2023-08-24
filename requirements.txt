@@ -1,0 +1,4 @@
+Pillow
+google
+requests
+bs4
