@@ -1,5 +1,5 @@
 # DorkBuster
-*DorkBuster es una poderosa herramienta de código abierto diseñada para realizar dorking de manera eficiente y ética. El dorking, también conocido como "Google dorking" o "Google hacking", se refiere a la técnica de utilizar operadores de búsqueda avanzados en motores de búsqueda para identificar vulnerabilidades, información sensible y puntos débiles en sistemas en línea.*
+*DorkBuster es una herramienta de código abierto diseñada para realizar dorking. El dorking, también conocido como "Google dorking" o "Google hacking", se refiere a la técnica de utilizar operadores de búsqueda avanzados en motores de búsqueda para identificar vulnerabilidades, información sensible y puntos débiles en sistemas en línea.*
 
 ## Características clave:
 
