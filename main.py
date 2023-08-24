@@ -1,3 +1,7 @@
+# DorkBuster
+# By: Euronymou5
+# VERSION BETA
+
 import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import Image, ImageTk
