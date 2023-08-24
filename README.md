@@ -39,3 +39,31 @@ pip install -r requiremens.txt
 ```
 python main.py
 ```
+
+## Linux
+
+*Solo probado en Linux (Debian)*
+
+**Clonamos el repositorio**
+
+```bash
+git clone https://github.com/Euronymou5/DorkBuster.git
+```
+
+**Entrar a la carpeta**
+
+```bash
+cd DorkBuster
+```
+
+**Instalar requirements.txt**
+
+```bash
+pip3 install -r requirements.txt
+```
+
+**Ejecutar la herramienta**
+
+```bash
+python3 main.py
+```
