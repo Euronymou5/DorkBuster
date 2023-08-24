@@ -78,3 +78,11 @@ python3 main.py
 | Menu de argumentos | Busqueda de resultados |
 | -------------- | ----------------|
 |![Index](https://media.discordapp.net/attachments/995599976463859713/1144118545207267328/image.png?width=535&height=345)|![image](https://media.discordapp.net/attachments/995599976463859713/1144118903732178944/image.png?width=535&height=344)
+
+# Version
+
+*v1.0.0* **BETA EN DESARROLLO**
+
+# Licencia 
+
+**[MPL-2.0 license](https://github.com/Euronymou5/DorkBuster/blob/main/LICENSE)**
