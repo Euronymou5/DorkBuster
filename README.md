@@ -20,9 +20,9 @@
 
 # Instalacion
 
-**Windows**
+## Windows
 
-*Descargar archivo .zip
+*Descargar archivo .zip**
 
 ```
 https://github.com/Euronymou5/DorkBuster/archive/refs/heads/main.zip
