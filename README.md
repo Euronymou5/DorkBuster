@@ -17,3 +17,25 @@
 
 • *Módulos de Búsqueda Personalizables:*
 **Incluye la funcion de personalizar los módulos de búsqueda que incluye DorkBuster. ¿Prefieres resultados de Yahoo en lugar de Google? Tú decides qué fuentes se utilizan para obtener los resultados más relevantes.**
+
+# Instalacion
+
+**Windows**
+
+*Descargar archivo .zip
+
+```
+https://github.com/Euronymou5/DorkBuster/archive/refs/heads/main.zip
+```
+
+**Despues se extrae y se instalan los "requirements.txt"**
+
+```
+pip install -r requiremens.txt
+```
+
+**Iniciar programa**
+
+```
+python main.py
+```
