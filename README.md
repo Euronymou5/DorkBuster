@@ -81,7 +81,7 @@ python3 main.py
 
 # Version
 
-*v1.0.0* **BETA EN DESARROLLO**
+*• v1.0.0* **BETA EN DESARROLLO**
 
 # Licencia 
 
