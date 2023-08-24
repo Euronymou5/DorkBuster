@@ -4,7 +4,7 @@
 ## Características clave:
 
 • *Argumentos Personalizados y Argumentos por Defecto:*
-**Personaliza tu experiencia eligiendo entre usar los argumentos que elijas o simplemente utilizar los valores por defecto seleccionados por el creador. Tú decides cómo quieres que funcione la búsqueda y generación de resultados.**
+**Personaliza tu busqueda eligiendo entre usar los argumentos que elijas o simplemente utilizar los valores por defecto seleccionados por el creador. Tú decides cómo quieres que funcione la búsqueda y generación de resultados.**
 
 • *Cantidad de Resultados:*
 **No importa si necesitas un par de resultados o una lista extensa, el programa te proporciona el control total sobre la cantidad de resultados generados. Ajusta este valor según tus necesidades y obtén exactamente la información que estás buscando.**
