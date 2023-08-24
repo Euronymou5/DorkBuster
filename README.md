@@ -83,6 +83,8 @@ python3 main.py
 
 *• v1.0.0* **BETA EN DESARROLLO**
 
+*Si quieres apoyar al proyecto puedes apoyar dando una estrella al repositorio!*
+
 # Licencia 
 
 **[MPL-2.0 license](https://github.com/Euronymou5/DorkBuster/blob/main/LICENSE)**
