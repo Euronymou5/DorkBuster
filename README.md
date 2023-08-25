@@ -88,3 +88,11 @@ python3 main.py
 # Licencia 
 
 **[MPL-2.0 license](https://github.com/Euronymou5/DorkBuster/blob/main/LICENSE)**
+
+# Contacto
+
+*Preguntas, dudas:*
+**Discord (No tag): euronymou5**
+
+*Bugs, Problemas de instalacion*:
+**[Reportar en los GitHub Issues](https://github.com/Euronymou5/DorkBuster/issues)**
