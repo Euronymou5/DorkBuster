@@ -42,7 +42,7 @@ python main.py
 
 ## Linux
 
-*• Solo probado en Linux (Debian)*
+*• Solo probado en Debian*
 
 **Clonamos el repositorio**
 
