@@ -81,7 +81,7 @@ python3 main.py
 
 # Version
 
-*• v1.0.0* **BETA EN DESARROLLO**
+*• v1.0* **BETA EN DESARROLLO**
 
 *Si quieres apoyar al proyecto puedes apoyar dando una estrella al repositorio!*
 
