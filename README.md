@@ -92,7 +92,9 @@ python3 main.py
 # Contacto
 
 *Preguntas, dudas:*
-**Discord (No tag): euronymou5**
+
+**• Discord (No tag): euronymou5**
 
 *Bugs, Problemas de instalacion*:
-**[Reportar en los GitHub Issues](https://github.com/Euronymou5/DorkBuster/issues)**
+
+• **[Reportar en los GitHub Issues](https://github.com/Euronymou5/DorkBuster/issues)**
