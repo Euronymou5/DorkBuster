@@ -10,7 +10,7 @@
 **No importa si necesitas un par de resultados o una lista extensa, el programa te proporciona el control total sobre la cantidad de resultados generados. Ajusta este valor según tus necesidades y obtén exactamente la información que estás buscando.**
 
 • *Cooldown para un tiempo de espera por resultado:*
-**Con la función de "cooldown", los resultados aparecerán uno por la cantidad de timepo de espera.**
+**Con la función de "cooldown", los resultados aparecerán uno por la cantidad de tiempo de espera.**
 
 • *Guardado Opcional en Archivo .txt:*
 **Los resultados son valiosos, por lo que se incluye la opción de guardarlos en un archivo .txt. Si deseas conservar un registro de tus búsquedas o simplemente mantener un registro, esta función te permite hacerlo de manera sencilla.**
