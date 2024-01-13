@@ -1,20 +1,21 @@
 # DorkBuster
 # By: Euronymou5
-# VERSION BETA
+# VERSION v1.2
 
 import tkinter as tk
 import tkinter.ttk as ttk
 from PIL import Image, ImageTk
 import configparser
-import re
 from tkinter import messagebox
 import requests
 import sys
-import time
+import threading
 from bs4 import BeautifulSoup
 from tkinter.scrolledtext import ScrolledText
 from googlesearch import search        
 import random
+from duckduckgo_search import DDGS
+import json
 
 args_variable = ""
 config = configparser.ConfigParser()
@@ -72,7 +73,7 @@ def args_default_func():
     valor = IsActive_defaultargs_checkbutton.get()
     try:
         IsActive_custom_checkbutton.set(False)
-        entry_custom_args.destroy()
+      #  entry_custom_args.destroy()
     except:
         pass    
     if valor == True:
@@ -122,7 +123,7 @@ def args_menu():
             IsActive_custom_checkbutton.set(True)
     except:
         messagebox.showerror("DorkBuster", "Imposible de poder leer el archivo de configuracion.")
-        sys.exit(0)
+        sys.exit(1)
 
 def config_func():
     # Definiendo variables:
@@ -178,7 +179,7 @@ def config_func():
     modulos_combobox = ttk.Combobox(config_level)
     modulos_variable = tk.StringVar()
     modulos_combobox.configure(justify="center", textvariable=modulos_variable)
-    modulos_combobox.configure(values = ('Google-Python', 'Yahoo', 'Google-Python-Requests'))
+    modulos_combobox.configure(values = ('Google-Python', 'Yahoo', 'Google-Python-Requests', 'DuckDuckGo'))
     modulos_combobox.place(anchor="nw",relwidth=0.41,relx=0.32,rely=0.75)
     modulos_combobox.bind("<<ComboboxSelected>>", change_combo)
     # Deteccion de valores del archivo de configuracion:
@@ -194,7 +195,7 @@ def config_func():
         modulos_combobox.set(combo_valor)
     except:
         messagebox.showerror("DorkBuster", "Imposible de poder leer el archivo de configuracion.")
-        sys.exit(0)
+        sys.exit(1)
 
 def search_func():
     config.read('config.ini')
@@ -234,56 +235,40 @@ def search_func():
             tld = random.choice(dom)
             result_list = []
             # Argumentos por defecto:
-            arg = f"allintext:{busqueda} site:@"
-            arg_a = f"allinurl:{busqueda} site:@"
-            arg_b = f"intext:{busqueda} site:@ filetype:pdf"
-            arg_c = f"intext:{busqueda} site:@ filetype:venv"
-            arg_d = f"intitle:{busqueda}"
-            arg_e = f"intext:{busqueda} filetype:pcf"
-            arg_f = f"intext:{busqueda}"
-            arg_g = f"inurl:{busqueda}"
-            #--------------------------
+            args = [
+               f"allintext:{busqueda}",
+               f"allinurl:{busqueda}",
+               f"intext:{busqueda} filetype:pdf",
+               f"intext:{busqueda} filetype:venv",
+               f"intitle:{busqueda}",
+               f"intext:{busqueda} filetype:pcf",
+               f"intext:{busqueda}",
+               f"inurl:{busqueda}",
+               f"intitle:index.of {busqueda}",
+               f"filetype:conf {busqueda}",
+               f"intitle:{busqueda} filetype:doc OR filetype:pdf OR filetype:txt",
+               f"intitle:{busqueda} filetype:sql",
+               f"intitle:{busqueda} filetype:log",
+               f"intitle:{busqueda} filetype:backup OR filetype:bkf OR filetype:sqlbak",
+               f"intitle:{busqueda} filetype:err",
+               f"intitle:{busqueda} filetype:htpasswd OR filetype:htaccess",
+               f"intitle:{busqueda} filetype:config OR filetype:ini OR filetype:conf"
+            ]
+
+            # Mensaje de inicio
             messagebox.showinfo('DorkBuster', f'Busqueda comenzada de {busqueda}.')
-            #---------------------------
-            results = search(arg, tld,num=int(resultados), stop=int(resultados), pause=int(cooldown))
-            for result in results:
-                result_list.append(result)
-                resultados_text.insert(tk.END, f'{result}\n')
-            # Busqueda arg_a
-            results_a = search(arg_a, tld,num=int(resultados), stop=int(resultados), pause=int(cooldown))
-            for result1 in results_a:
-                result_list.append(result1)
-                resultados_text.insert(tk.END, f'{result1}\n')
-            # Busqueda arg_b
-            results_m = search(arg_b, tld,num=int(resultados), stop=int(resultados), pause=int(cooldown))
-            for result2 in results_m:
-                result_list.append(result2)
-                resultados_text.insert(tk.END, f'{result2}\n')
-            # Busqueda arg_c
-            results_c = search(arg_c, tld,num=int(resultados), stop=int(resultados), pause=int(cooldown))
-            for result3 in results_c:
-                result_list.append(result3)
-                resultados_text.insert(tk.END, f'{result3}\n')
-            # Busqueda arg_d
-            results_d = search(arg_d, tld,num=int(resultados), stop=int(resultados), pause=int(cooldown))
-            for result4 in results_d:
-                result_list.append(result4)
-                resultados_text.insert(tk.END, f'{result4}\n')
-            # Busqueda arg_e
-            results_e = search(arg_e, tld,num=int(resultados), stop=int(resultados), pause=int(cooldown))
-            for result5 in results_e:
-                result_list.append(result5)
-                resultados_text.insert(tk.END, f'{result5}\n')
-            # Busqueda arg_f
-            results_f = search(arg_f, tld,num=int(resultados), stop=int(resultados), pause=int(cooldown))
-            for result6 in results_f:
-                result_list.append(result6)
-                resultados_text.insert(tk.END, f'{result6}\n')
-            # Busqueda arg_g
-            results_g = search(arg_g, tld,num=int(resultados), stop=int(resultados), pause=int(cooldown))
-            for result7 in results_g:
-                result_list.append(result7)
-                resultados_text.insert(tk.END, f'{result7}\n')
+
+            # Seleccionar aleatoriamente 'resultados' elementos de la lista args
+            args_to_search = random.sample(args, min(len(args), int(resultados)))
+
+            # Realizar búsquedas y mostrar resultados
+            for arg in args_to_search:
+               results = search(arg, tld, num=int(resultados), stop=int(resultados), pause=int(cooldown))
+               for result in results:
+                   result_list.append(result)
+                   resultados_text.insert(tk.END, f'{result}\n')
+
+            # --------------- Txt Save ------------
             if txt_save == True:
                 new = busqueda.replace(" ", "")
                 with open(f"busqueda_{new}.txt", "w+") as file:
@@ -293,28 +278,55 @@ def search_func():
                 pass                        
             messagebox.showinfo('DorkBuster', 'Busqueda finalizada.')
     elif modulos == "Google-Python-Requests":
-        resultados = []
+        result_list = []
         config.read('config.ini')
         valor = config.get('Settings', 'custom_args')
         if valor == "False":
             # Version BETA  
-            queries = [f"allintext:{busqueda} site:@",f"allinurl:{busqueda} site:@",f"intext:{busqueda} site:@ filetype:pdf",f"intext:{busqueda} site:@ filetype:venv",f"intitle:{busqueda}",f"intext:{busqueda} filetype:pcf",f"intext:{busqueda}",f"inurl:{busqueda}"]
+            queries = [
+               f"allintext:{busqueda}",
+               f"allinurl:{busqueda}",
+               f"intext:{busqueda} filetype:pdf",
+               f"intext:{busqueda} filetype:venv",
+               f"intitle:{busqueda}",
+               f"intext:{busqueda} filetype:pcf",
+               f"intext:{busqueda}",
+               f"inurl:{busqueda}",
+               f"intitle:index.of {busqueda}",
+               f"filetype:conf {busqueda}",
+               f"intitle:{busqueda} filetype:doc OR filetype:pdf OR filetype:txt",
+               f"intitle:{busqueda} filetype:sql",
+               f"intitle:{busqueda} filetype:log",
+               f"intitle:{busqueda} filetype:backup OR filetype:bkf OR filetype:sqlbak",
+               f"intitle:{busqueda} filetype:err",
+               f"intitle:{busqueda} filetype:htpasswd OR filetype:htaccess",
+               f"intitle:{busqueda} filetype:config OR filetype:ini OR filetype:conf"
+            ]
+
+            # Mensaje de inicio
+            messagebox.showinfo('DorkBuster', f'Busqueda comenzada de {busqueda}.')
+        
+            # Seleccionar aleatoriamente 'resultados' elementos de la lista queries
+            queries_to_search = random.sample(queries, min(len(queries), int(resultados)))
+
+            # Realizar búsquedas y mostrar resultados
             url = "https://www.google.com/search?"
-            for varr in queries:
-                params = {"q": varr}
-                response = requests.get(url, params=params)
-            if response.status_code == 200:
-                for url in response.text.split('<a href="/url?q=')[1:]:
-                    resultados_text.insert(tk.END, f"{url.split('&amp;sa=U&amp;')[0]}\n")
-                    resultados.append(url.split('&amp;sa=U&amp;')[0])
-                resultados_text.insert(tk.END, "\n")
-            else:
-                messagebox.showinfo('DorkBuster', 'Error al conectar con google')
-                    
+            for query in queries_to_search:
+               params = {"q": query}
+               response = requests.get(url, params=params)
+               
+               if response.status_code == 200:
+                  for url in response.text.split('<a href="/url?q=')[1:]:
+                        resultados_text.insert(tk.END, f"{url.split('&amp;sa=U&amp;')[0]}\n")
+                        result_list.append(url.split('&amp;sa=U&amp;')[0])
+                  resultados_text.insert(tk.END, "\n")
+               else:
+                    messagebox.showinfo('DorkBuster', 'Error al conectar con Google')
+            #--------- Txt save ---------------
             if txt_save == True:
                 new = busqueda.replace(" ", "")
                 with open(f"busqueda_{new}.txt", "w+") as file:
-                    for item in resultados:
+                    for item in result_list:
                         file.write("%s\n" % item)
             else:
                 pass
@@ -326,18 +338,19 @@ def search_func():
             if response.status_code == 200:
                 for url in response.text.split('<a href="/url?q=')[1:]:
                    resultados_text.insert(tk.END, f"{url.split('&amp;sa=U&amp;')[0]}\n")
-                   resultados.append(url.split('&amp;sa=U&amp;')[0])
+                   result_list.append(url.split('&amp;sa=U&amp;')[0])
                 print("\n")
             else:
                 messagebox.showinfo('DorkBuster', 'Error al conectar con google')
             if txt_save == True:
                 new = busqueda.replace(" ", "")
                 with open(f"busqueda_{new}.txt", "w+") as file:
-                    for item in resultados:
+                    for item in result_list:
                         file.write("%s\n" % item)
             else:
                 pass
             messagebox.showinfo('DorkBuster', 'Busqueda finalizada.')
+    # --------------  Yahoo ------------
     elif modulos == "Yahoo":
         resultados = []
         config.read('config.ini')
@@ -347,17 +360,43 @@ def search_func():
             messagebox.showinfo('DorkBuster', f'Busqueda comenzada de {busqueda}.')
             
             resultados = []
-            queries = [f"allintext:{busqueda} site:@",f"allinurl:{busqueda} site:@",f"intext:{busqueda} site:@ filetype:pdf",f"intext:{busqueda} site:@ filetype:venv",f"intitle:{busqueda}",f"intext:{busqueda} filetype:pcf",f"intext:{busqueda}",f"inurl:{busqueda}"]
-            
-            for varr in queries:
-                url = f"https://search.yahoo.com/search?q={varr}"
+          #  queries = [f"allintext:{busqueda}",f"allinurl:{busqueda}",f"intext:{busqueda} filetype:pdf",f"intext:{busqueda} filetype:venv",f"intitle:{busqueda}",f"intext:{busqueda} filetype:pcf",f"intext:{busqueda}",f"inurl:{busqueda}"] 
+            queries = [
+               f"allintext:{busqueda}",
+               f"allinurl:{busqueda}",
+               f"intext:{busqueda} filetype:pdf",
+               f"intext:{busqueda} filetype:venv",
+               f"intitle:{busqueda}",
+               f"intext:{busqueda} filetype:pcf",
+               f"intext:{busqueda}",
+               f"inurl:{busqueda}",
+               f"intitle:index.of {busqueda}",
+               f"filetype:conf {busqueda}",
+               f"intitle:{busqueda} filetype:doc OR filetype:pdf OR filetype:txt",
+               f"intitle:{busqueda} filetype:sql",
+               f"intitle:{busqueda} filetype:log",
+               f"intitle:{busqueda} filetype:backup OR filetype:bkf OR filetype:sqlbak",
+               f"intitle:{busqueda} filetype:err",
+               f"intitle:{busqueda} filetype:htpasswd OR filetype:htaccess",
+               f"intitle:{busqueda} filetype:config OR filetype:ini OR filetype:conf"
+            ]
+
+            # Seleccionar aleatoriamente 'limit' elementos de la lista queries
+            queries_to_search = random.sample(queries, min(len(queries), int(limit)))
+
+            # Comenzar busqueda
+            for query in queries_to_search:
+                url = f"https://search.yahoo.com/search?q={query}"
                 response = requests.get(url)
-            soup = BeautifulSoup(response.text, "html.parser")
-            results = soup.find_all("div", class_="compTitle options-toggle")
-            
+                soup = BeautifulSoup(response.text, "html.parser")
+                results = soup.find_all("div", class_="compTitle options-toggle")
+
             for i, result in enumerate(results[:int(limit)]):
-                resultados.append(result.find('a')['href'])
-                resultados_text.insert(tk.END, f"{result.find('a')['href']}\n")
+                url_result = result.find('a')['href']
+                resultados.append(url_result)
+                resultados_text.insert(tk.END, f"{url_result}\n")
+
+            # ------ Txt Save --------------
             if txt_save == True:
                 new = busqueda.replace(" ", "")
                 with open(f"busqueda_{new}.txt", "w+") as file:
@@ -379,6 +418,7 @@ def search_func():
             for i, result in enumerate(results[:int(limit)]):
                 resultados.append(result.find('a')['href'])
                 resultados_text.insert(tk.END, f"{result.find('a')['href']}\n")
+
             if txt_save == True:
                 new = busqueda.replace(" ", "")
                 with open(f"busqueda_{new}.txt", "w+") as file:
@@ -387,6 +427,83 @@ def search_func():
             else:
                 pass
             messagebox.showinfo('DorkBuster', 'Busqueda finalizada.')
+
+    # ------ Duckduckgo ------- #
+    elif modulos == "DuckDuckGo":
+        resultados = []
+        config.read('config.ini')
+        valor = config.get('Settings', 'custom_args')
+        limit = config.get('Settings', 'resultados')
+
+        if valor == "True":
+            messagebox.showinfo('DorkBuster', f'Busqueda comenzada de {busqueda}.')
+
+            with DDGS() as ddgs:
+                bsq = [r for r in ddgs.text(busqueda, max_results=int(limit))]
+                datos = json.loads(json.dumps(bsq))
+                for item in datos:
+                    href = item['href']
+                    resultados.append(href)
+
+                    resultados_text.insert(tk.END, f"{href}\n")
+
+            if txt_save == True:
+                new = busqueda.replace(" ", "")
+                with open(f"busqueda_{new}.txt", "w+") as file:
+                    for item in resultados:
+                        file.write("%s\n" % item)
+            else:
+                pass
+            messagebox.showinfo('DorkBuster', 'Busqueda finalizada.')
+                
+        else: # No custom args--
+            messagebox.showinfo('DorkBuster', f'Busqueda comenzada de {busqueda}.')
+
+            queries = [
+                f"allintext:{busqueda}",
+                f"allinurl:{busqueda}",
+                f"intext:{busqueda} filetype:pdf",
+                f"intext:{busqueda} filetype:venv",
+                f"intitle:{busqueda}",
+                f"intext:{busqueda} filetype:pcf",
+                f"intext:{busqueda}",
+                f"inurl:{busqueda}",
+                f"intitle:index.of {busqueda}",
+                f"filetype:conf {busqueda}",
+                f"intitle:{busqueda} filetype:doc OR filetype:pdf OR filetype:txt",
+                f"intitle:{busqueda} filetype:sql",
+                f"intitle:{busqueda} filetype:log",
+                f"intitle:{busqueda} filetype:backup OR filetype:bkf OR filetype:sqlbak",
+                f"intitle:{busqueda} filetype:err",
+                f"intitle:{busqueda} filetype:htpasswd OR filetype:htaccess",
+                f"intitle:{busqueda} filetype:config OR filetype:ini OR filetype:conf"
+            ]
+
+            queries_to_search = random.sample(queries, min(len(queries), int(limit)))
+
+            with DDGS() as ddgs:
+               for query in queries_to_search:
+                    bsq = [r for r in ddgs.text(query, max_results=int(limit))]
+                    datos = json.loads(json.dumps(bsq))
+            
+                    for item in datos:
+                       href = item['href']
+                       resultados.append(href)
+                       resultados_text.insert(tk.END, f"{href}\n")
+
+            if txt_save == True:
+                new = busqueda.replace(" ", "")
+                with open(f"busqueda_{new}.txt", "w+") as file:
+                    for item in resultados:
+                        file.write("%s\n" % item)
+            else:
+                pass
+            messagebox.showinfo('DorkBuster', 'Busqueda finalizada.')
+
+# Hecho solo para evitar que el programa se congele al iniciar la funcion "search_func"
+def start_search():
+    th = threading.Thread(target=search_func)
+    th.start()
 
 # Menu principal:
 
@@ -429,7 +546,7 @@ search_entry.place(anchor="nw",relheight=0.06,relwidth=0.41,relx=0.29,rely=0.19,
 buscar_button = ttk.Button(ventana)
 buscar_button.configure(text='Buscar')
 buscar_button.place(anchor="nw",relheight=0.09,relwidth=0.3,relx=0.35,rely=0.32,x=0,y=0)
-buscar_button.configure(command=search_func)
+buscar_button.configure(command=start_search)
 
 resultados_text = ScrolledText(ventana)
 resultados_text.configure(background="#aaaaaa",font="{Calibri} 10 {}",foreground="#000000")
