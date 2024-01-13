@@ -2,3 +2,4 @@ Pillow
 google
 requests
 bs4
+duckduckgo_search
