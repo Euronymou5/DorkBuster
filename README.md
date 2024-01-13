@@ -81,9 +81,17 @@ python3 main.py
 
 # Version
 
-*• v1.0* **BETA EN DESARROLLO**
+*• v1.2* **BETA EN DESARROLLO**
 
 *Si quieres apoyar al proyecto puedes apoyar dando una estrella al repositorio!*
+
+## Actualizacion
+
+Se optimizaron ciertas secciones del código y se corrigieron algunos errores al realizar búsquedas en Google utilizando las bibliotecas Python, Google-Requests y Yahoo.
+
+Se añadió DuckDuckGo como una nueva fuente de búsqueda.
+
+![image](https://github.com/Euronymou5/DorkBuster/assets/85043356/e72ef262-bf1c-4fd8-a7d5-fbfabbadd5d5)
 
 # Licencia 
 
