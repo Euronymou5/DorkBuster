@@ -1,97 +1,49 @@
 # DorkBuster
-*DorkBuster es una herramienta de código abierto diseñada para realizar dorking. El dorking, también conocido como "Google dorking" o "Google hacking", se refiere a la técnica de utilizar operadores de búsqueda avanzados en motores de búsqueda para identificar vulnerabilidades, información sensible y puntos débiles en sistemas en línea.*
+*DorkBuster es una herramienta de código abierto avanzada de reconocimiento OSINT y Google Dorking automatizado con interfaz gráfica moderna en PyQt5 y generación de dorks asistida por IA (OpenRouter).*
 
-## Características clave:
+---
 
-• *Argumentos Personalizados y Argumentos por Defecto:*
-**Personaliza tu busqueda eligiendo entre usar los argumentos que elijas o simplemente utilizar los valores por defecto seleccionados por el creador. Tú decides cómo quieres que funcione la búsqueda y generación de resultados.**
+##  Novedades de la Versión 2.0 (V2)
 
-• *Cantidad de Resultados:*
-**No importa si necesitas un par de resultados o una lista extensa, el programa te proporciona el control total sobre la cantidad de resultados generados. Ajusta este valor según tus necesidades y obtén exactamente la información que estás buscando.**
+* **Interfaz Gráfica Moderna con PyQt5**: Sustitución de `tkinter` por una GUI minimalista en escala de grises oscuros, negro y blanco.
+*  **Generación de Dorks con Cualquier Modelo de OpenRouter**: Entrada de texto libre para usar cualquier modelo disponible en OpenRouter (por ejemplo, `deepseek/deepseek-v4-flash-0731`, `google/gemma-4-26b-a4b-it`, `nvidia/nemotron-3-ultra-550b-a55b:free`, etc.).
+*  **Seguridad y Persistencia en `config.json`**: Guarda tu configuración y oculta tu API key una vez configurada (mostrada como `apikey-xxxxxxxxxx` o deshabilitada), con botón para editarla cuando desees.
+* **Soporte de Proxy (HTTP / HTTPS / SOCKS5)**: Posibilidad de enrutar todas las consultas a través de servidores proxy o la red Tor (`socks5://127.0.0.1:9050`), con botón integrado para probar la conectividad y verificar la IP pública de salida antes de iniciar las búsquedas.
+* **Búsqueda Multi-Motor Simultánea**: Consulta en Bing, Yahoo, DuckDuckGo, Google (vía `googlesearch-python`) y Google directo (`requests`) a la vez, con soporte de fingerprinting TLS de navegador (`primp`) para máxima fiabilidad.
+*  **Deduplicación de Enlaces en Tiempo Real**: Si múltiples motores devuelven las mismas URLs o parámetros de tracking duplicados, el sistema normaliza y descarta los duplicados, manteniendo una lista limpia de resultados únicos.
+*  **Control Total (Hilos en Segundo Plano y Cancelación)**: La interfaz nunca se congela (`QThread`) e incluye un botón **Detener** para cancelar la búsqueda en curso en cualquier momento (`threading.Event`).
+*  **Compatibilidad Hacia Atrás**: Si no cuentas con una API key o prefieres no usar IA, puedes ingresar dorks manuales o utilizar los dorks estáticos tradicionales de la versión original.
 
-• *Cooldown para un tiempo de espera por resultado:*
-**Con la función de "cooldown", los resultados aparecerán uno por la cantidad de tiempo de espera.**
+---
 
-• *Guardado Opcional en Archivo .txt:*
-**Los resultados son valiosos, por lo que se incluye la opción de guardarlos en un archivo .txt. Si deseas conservar un registro de tus búsquedas o simplemente mantener un registro, esta función te permite hacerlo de manera sencilla.**
+## Requisitos para utilizar la IA
+* Cuenta y clave de API en [OpenRouter](https://openrouter.ai/) si deseas utilizar la generación de dorks mediante LLM.
+* Es posible utilizar modelos gratiutos o de paga con openrouter.
 
-• *Módulos de Búsqueda Personalizables:*
-**Incluye la funcion de personalizar los módulos de búsqueda que incluye DorkBuster. ¿Prefieres resultados de Yahoo en lugar de Google? Tú decides qué fuentes se utilizan para obtener los resultados más relevantes.**
+---
 
-# Instalacion
+##  Instalación
 
-## Windows
+1. **Clonar o descargar el proyecto:**
+   ```bash
+   git clone https://github.com/Euronymou5/DorkBuster.git
+   cd DorkBuster
+   ```
 
-**Descargar archivo .zip**
+2. **Instalar dependencias:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-```
-https://github.com/Euronymou5/DorkBuster/archive/refs/heads/main.zip
-```
+---
 
-**Despues se extrae y se instalan los "requirements.txt"**
+##  Ejecución
 
-```
-pip install -r requiremens.txt
-```
-
-**Iniciar programa**
-
-```
-python main.py
-```
-
-## Linux
-
-*• Solo probado en Debian*
-
-**Clonamos el repositorio**
+Puedes iniciar la herramienta ejecutando:
 
 ```bash
-git clone https://github.com/Euronymou5/DorkBuster.git
+python dorkbuster.py
 ```
-
-**Entrar a la carpeta**
-
-```bash
-cd DorkBuster
-```
-
-**Instalar requirements.txt**
-
-```bash
-pip3 install -r requirements.txt
-```
-
-**Ejecutar la herramienta**
-
-```bash
-python3 main.py
-```
-
-# Imagenes
-
-| Menu principal | Menu de configuracion |
-| -------------- | ----------------|
-|![Index](https://media.discordapp.net/attachments/995599976463859713/1144118265573036092/image.png?width=535&height=344)|![f](https://media.discordapp.net/attachments/995599976463859713/1144118469076467753/image.png?width=535&height=344)
-
-
-| Menu de argumentos | Busqueda de resultados |
-| -------------- | ----------------|
-|![Index](https://media.discordapp.net/attachments/995599976463859713/1144118545207267328/image.png?width=535&height=345)|![image](https://media.discordapp.net/attachments/995599976463859713/1144118903732178944/image.png?width=535&height=344)
-
-# Version
-
-*• v1.2* **BETA EN DESARROLLO**
-
-*Si quieres apoyar al proyecto puedes apoyar dando una estrella al repositorio!*
-
-## Actualizacion
-
-Se optimizaron ciertas secciones del código y se corrigieron algunos errores al realizar búsquedas en Google utilizando las bibliotecas Python, Google-Requests y Yahoo.
-
-Se añadió DuckDuckGo como una nueva fuente de búsqueda.
-
-![image](https://github.com/Euronymou5/DorkBuster/assets/85043356/e72ef262-bf1c-4fd8-a7d5-fbfabbadd5d5)
 
 # Licencia 
 
@@ -99,10 +51,8 @@ Se añadió DuckDuckGo como una nueva fuente de búsqueda.
 
 # Contacto
 
-*Preguntas, dudas:*
+[![discord](https://img.shields.io/badge/Discord-euronymou5-a?style=plastic&logo=discord&logoColor=white&labelColor=black&color=7289DA)](https://discord.com/users/452720652500205579)
 
-**• Discord (No tag): euronymou5**
+![email](https://img.shields.io/badge/ProtonMail-mr.euron%40proton.me-a?style=plastic&logo=protonmail&logoColor=white&labelColor=black&color=8B89CC)
 
-*Bugs, Problemas de instalacion*:
-
-• **[Reportar en los GitHub Issues](https://github.com/Euronymou5/DorkBuster/issues)**
+[![X](https://img.shields.io/twitter/follow/Euronymou51?style=plastic&logo=X&label=%40Euronymou51&labelColor=%23000000&color=%23000000)](https://x.com/Euronymou51)
