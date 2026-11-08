@@ -1,5 +1,8 @@
-Pillow
-google
+PyQt5
 requests
-bs4
-duckduckgo_search
+beautifulsoup4
+duckduckgo-search
+googlesearch-python
+openai
+primp
+PySocks
