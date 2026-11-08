@@ -1,0 +1,18 @@
+{
+    "api_key": "",
+    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "use_llm": false,
+    "max_results": 10,
+    "cooldown": 1.0,
+    "selected_engines": [
+        "Bing",
+        "Yahoo",
+        "DuckDuckGo",
+        "Google-Python"
+    ],
+    "auto_save_txt": true,
+    "txt_filename_pattern": "busqueda_{target}.txt",
+    "dork_query": "",
+    "use_proxy": false,
+    "proxy_url": ""
+}
